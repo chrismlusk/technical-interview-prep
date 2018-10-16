@@ -1,3 +1,5 @@
+# Instructor Notes
+
 - interviewer guidelines: in general *and* per exercise
 - interviewer feedback post-interview
 - help text should walk through solution

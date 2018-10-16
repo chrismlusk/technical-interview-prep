@@ -4,7 +4,7 @@ Design / architect checkers as a web-app.
 
 # Checkers rules
 
-In general, the *exact* details are not terribly important. The general gist of the game and how it's played is good to understand.
+In general, the _exact_ details are not terribly important. The general gist of the game and how it's played is good to understand.
 
 - [Written description](http://www.darkfish.com/checkers/rules.html)
 - [Video tutorial](https://youtu.be/SuQY1_fCVsA)

@@ -12,12 +12,12 @@ I generally break this question into three parts:
 
 The correct answer is,
 
-  > `react-dom.render` takes a virtual DOM node (a `React.Element`) and a
-  > real DOM node (an `Element`), and mounts the virtual DOM onto the
-  > real DOM. It constructs and mounts any Components specified by the virtual
-  > DOM tree, calling their lifecycle methods as appropriate. Importantly, it
-  > also kicks off React's reconciliation process, continuously mutating the
-  > (real) DOM to reflect the current state of the virtual DOM.
+> `react-dom.render` takes a virtual DOM node (a `React.Element`) and a
+> real DOM node (an `Element`), and mounts the virtual DOM onto the
+> real DOM. It constructs and mounts any Components specified by the virtual
+> DOM tree, calling their lifecycle methods as appropriate. Importantly, it
+> also kicks off React's reconciliation process, continuously mutating the
+> (real) DOM to reflect the current state of the virtual DOM.
 
 To date, nobody has said this.
 
@@ -27,14 +27,14 @@ of comprehension.
 
 A response indicating strong understanding of React might be,
 
-  > A React Component's `render` method returns a virtual DOM node, or null. The
-  > node is the root of a virtual DOM tree representing the component. `render`
-  > should be free of side-effects; it should be a pure function of the `Component`'s
-  > `state` and `props`.
+> A React Component's `render` method returns a virtual DOM node, or null. The
+> node is the root of a virtual DOM tree representing the component. `render`
+> should be free of side-effects; it should be a pure function of the `Component`'s
+> `state` and `props`.
 
 A more typical response,
 
-  > It returns the HTML for the component.
+> It returns the HTML for the component.
 
 This is a great moment to correct any misconceptions they have about React fundamentals.
 
@@ -46,9 +46,9 @@ If they get really stuck, it's fine to remind them about it.
 
 By the time we move on, we should be in agreement on these points:
 
-  * The signature of the function in question is `render(element: React.Element, container: Element)`
-  * It takes a virtual DOM node and a real DOM node, *and those are different things*  
-  * In prticular, virtual DOM nodes *are JSX* (or: when you type JSX, you are typing virtual dom literals).
+- The signature of the function in question is `render(element: React.Element, container: Element)`
+- It takes a virtual DOM node and a real DOM node, _and those are different things_
+- In prticular, virtual DOM nodes _are JSX_ (or: when you type JSX, you are typing virtual dom literals).
 
 This opens the next question, which is: what exactly is a virtual DOM node?
 
@@ -77,13 +77,13 @@ But `key` and `ref` aren't relevant for our purposes, so this is fine too:
 This step is usually quite intimidating. Some students have literally never seen a virtual DOM
 node printed to the console—JSX just looks like magic. I offer a few hints quite readily:
 
-  1. Remember that JSX is converted to calls to `React.createElement()`. So we're asking what
-     that function returns.
-  2. `createElement` doesn't do anything too clever—it mostly just wraps its arguments in an object
-     and returns that object
-  3. The transpiler is not that smart. The same line of JSX code is *always* going to become the
-     same call to `React.createElement`. So the arguments to that function must all be there in the JSX,
-     just shuffled around syntactically.
+1. Remember that JSX is converted to calls to `React.createElement()`. So we're asking what
+   that function returns.
+2. `createElement` doesn't do anything too clever—it mostly just wraps its arguments in an object
+   and returns that object
+3. The transpiler is not that smart. The same line of JSX code is _always_ going to become the
+   same call to `React.createElement`. So the arguments to that function must all be there in the JSX,
+   just shuffled around syntactically.
 
 It's common for students to try to start off with just a bag of props.
 
@@ -127,10 +127,11 @@ Here's some code that does that:
 // Takes a Virtual DOM tree and returns a tree of real DOM elements
 // described by it.
 function render(element) {
-  const dom = document.createElement(element.type)
-  Object.keys(element.props)
-    .forEach(prop => handle(element, prop, element.props[value]))
-  return element
+  const dom = document.createElement(element.type);
+  Object.keys(element.props).forEach(prop =>
+    handle(element, prop, element.props[value])
+  );
+  return element;
 }
 
 // handle(domElement: Element, prop: String, value: any) -> Void
@@ -138,28 +139,31 @@ function render(element) {
 // Mutate domElement as appropriate for the prop and value.
 function handle(domElement, prop, value) {
   // Special case handlers
-  if (prop in handlers)
-    return handlers[prop](domElement, prop, value)
+  if (prop in handlers) return handlers[prop](domElement, prop, value);
 
   // Event listeners
   if (prop.startsWith('on') && typeof value === 'function') {
-    domElement[prop.toLowerCase()] = value
-    return
+    domElement[prop.toLowerCase()] = value;
+    return;
   }
-  
+
   // Otherwise, set the prop as an attribute on the DOM node.
-  domElement.setAttribute(prop, value)
+  domElement.setAttribute(prop, value);
 }
 
 const handlers = {
-  className(e, prop, value) { e.setAttribute('class', value) },
+  className(e, prop, value) {
+    e.setAttribute('class', value);
+  },
 
-  style(e, prop, value) { Object.assign(e.style, value) },
+  style(e, prop, value) {
+    Object.assign(e.style, value);
+  },
 
   children(e, prop, value) {
-    value.forEach(child => e.appendChild(render(e)))
-  },
-}
+    value.forEach(child => e.appendChild(render(e)));
+  }
+};
 ```
 
 Initially, I don't have them worry about event listeners, or special case props like

@@ -1,10 +1,10 @@
 const doesPathExist = (graph, start, target, visited = {}) => {
   //if there are no nodes connected to the start, return false
-  if (!graph[start]) return false
+  if (!graph[start]) return false;
   //start tracking visited nodes --> visited = {start: true}
   visited[start] = true;
 
-  return graph[start].some((vertex) => {
+  return graph[start].some(vertex => {
     //if this item in the array is the end of the path, return true
     if (vertex === target) return true;
 
@@ -16,22 +16,21 @@ const doesPathExist = (graph, start, target, visited = {}) => {
       return false;
     }
   });
-}
+};
 
 //GRAPH 1
 const graph = {
   a: ['b'],
   b: ['c', 'd'],
   c: ['d'],
-  d: [],
-}
+  d: []
+};
 
 //GRAPH 1 OUTPUTS
-console.log(doesPathExist(graph, 'a', 'b')) // true
-console.log(doesPathExist(graph, 'a', 'e')) // false
-console.log(doesPathExist(graph, 'a', 'd')) // true
-console.log(doesPathExist(graph, 'a', 'a')) // false
-
+console.log(doesPathExist(graph, 'a', 'b')); // true
+console.log(doesPathExist(graph, 'a', 'e')); // false
+console.log(doesPathExist(graph, 'a', 'd')); // true
+console.log(doesPathExist(graph, 'a', 'a')); // false
 
 //GRAPH and OUTPUT that trigger the final ELSE case
 // const graph = {
@@ -43,7 +42,6 @@ console.log(doesPathExist(graph, 'a', 'a')) // false
 // }
 
 // console.log(doesPathExist(graph, 'a', 'e'))
-
 
 //GRAPH 2
 // const graph = {
